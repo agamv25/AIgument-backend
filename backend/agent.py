@@ -33,8 +33,8 @@ def chat(debate_data):
         You are a skilled debater arguing the following position with conviction:
         TOPIC: "{topic}"
         STANCE: "{stance}"
-        Previous Argument: "{argument}"
-    """.format(topic=debate_data.get("topic"), stance=debate_data.get("stance"), argument=debate_data.get("previous_argument"))
+        Previous Arguments: "{argument}"
+    """.format(topic=debate_data.get("topic"), stance=debate_data.get("speaker"), argument=debate_data.get("conversation"))
     
     # Send full history with each request
     response = client.messages.create(
@@ -50,22 +50,3 @@ def chat(debate_data):
     assistant_message = response.content[0].text
     
     return assistant_message
-
-
-# # Example debate data, taken from front end (will need decoding, do later)
-# debate_data = {
-#     "topic": "Universal Basic Income",
-#     "stance": "For",
-#     "previous_argument": "UBI would cause rampant inflation by flooding the economy with money."
-# }
-
-# # Get message from prompt
-# message = chat(debate_data)
-
-# # Prepare dictionary for conversion
-# message_data = {
-#     "message": message
-# }
-
-# # Convert back to JSON string and print
-# print(encode_json(message_data))

@@ -18,13 +18,10 @@ app = FastAPI()
 @app.post("/message/")
 def create_item(item: str):
     # Process the received item data
-    item_data = agent.decode_json(item)
-    print(f"Received item: {item_data.get("topic")}")
+    debate_data = agent.decode_json(item)
 
     # Run AI Algorithm
-    # ... TODO
-    
-    response_message = "placeholder"
+    response_message = agent.chat(debate_data)
 
     # Return output
     return {"message": response_message}
