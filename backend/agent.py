@@ -52,20 +52,20 @@ def chat(debate_data):
     return assistant_message
 
 
-# Example debate data, taken from front end (will need decoding, do later)
-debate_data = {
-    "topic": "Universal Basic Income",
-    "stance": "For",
-    "previous_argument": "UBI would cause rampant inflation by flooding the economy with money."
-}
+# # Example debate data, taken from front end (will need decoding, do later)
+# debate_data = {
+#     "topic": "Universal Basic Income",
+#     "stance": "For",
+#     "previous_argument": "UBI would cause rampant inflation by flooding the economy with money."
+# }
 
-# Get message from prompt
-message = chat(debate_data)
+# # Get message from prompt
+# message = chat(debate_data)
 
-# Prepare dictionary for conversion
-message_data = {
-    "message": message
-}
+# # Prepare dictionary for conversion
+# message_data = {
+#     "message": message
+# }
 
-# Convert back to JSON string and print
-print(encode_json(message_data))
+# # Convert back to JSON string and print
+# print(encode_json(message_data))
