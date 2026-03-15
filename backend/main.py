@@ -1,9 +1,14 @@
+from pathlib import Path
+from dotenv import load_dotenv
 from fastapi import FastAPI
-import agent
-import item
 from fastapi.middleware.cors import CORSMiddleware
 
-# Setup app
+import agent
+import item
+
+# Load .env from project root so it works when running from backend/
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
+
 app = FastAPI()
 
 app.add_middleware(
@@ -13,11 +18,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Add listener for message POST request
+
 @app.post("/message/")
 def create_item(item: item.Item):
-    # Run AI Algorithm
     response_message = agent.chat(item)
-
-    # Return output
     return {"message": response_message}
