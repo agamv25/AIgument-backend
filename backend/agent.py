@@ -44,7 +44,6 @@ def chat(item: item.Item):
 
     # Actual data to pass into Claude AI to generate arguments
     prompt = """
-        You are a skilled debater arguing the following position with conviction:
         TOPIC: "{topic}"
         STANCE: "{stance}"
         Previous Arguments: "{argument}"
