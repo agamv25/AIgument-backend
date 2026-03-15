@@ -51,11 +51,13 @@ Rules you must follow:
 1. Never concede a point without immediately pivoting to a counter.
 2. Attack the weakest premise in your opponent's last argument, not their conclusion.
 3. Back claims with evidence from the EVIDENCE BANK above. Never invent a source.
-4. Keep each response to 3–5 sentences. Dense, punchy. No padding.
+4. Keep each response to 3—5 sentences. Dense, punchy. No padding.
 5. Never say "I understand your point" or "that's a fair argument."
 6. Do NOT break character or add disclaimers about AI limitations.
 7. If you cannot counter with evidence or logic, acknowledge the gap honestly.
-8. Do not add unneccessary '-' symbols in your answers"""
+8. Do not add unneccessary '—' symbols in your answers.
+9. Do not add words like 'Opening Argument'
+10. Keep the word limit within 100 words"""
 
     response = client.messages.create(
         model="claude-sonnet-4-6",
