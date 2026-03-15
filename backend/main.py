@@ -4,18 +4,16 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-import agent
-import item
-
-# Load .env from project root so it works when running from backend/
 load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
-# CORS: comma-separated origins, e.g. "http://localhost:3000,https://app.example.com"
+import agent
+import item
+from fact_checker import check_hallucinations 
+
 _cors_origins = [x.strip() for x in os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",") if x.strip()]
 
 app = FastAPI()
 
-# CORS: Allow requests from allowed domains from .env file
 app.add_middleware(
     CORSMiddleware,
     allow_origins=_cors_origins,
@@ -23,8 +21,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Listen to POST requests sent to /message/, get AI response
 @app.post("/message/")
-def create_item(item: item.Item):
-    response_message = agent.chat(item)
-    return {"message": response_message}
+def create_item(payload: item.Item):
+    max_retries = 2
+    attempts = 0
+    while attempts <= max_retries:
+        response_message = agent.chat(payload)
+        evaluation = check_hallucinations(response_message)
+        
+        if evaluation.get("passed") is True:
+            print(f"[SUCCESS] Fact-check passed on attempt {attempts + 1}")
+            return {"message": response_message}
+            
+        print(f"[FAILED] Hallucination detected. Regenerating. Reason: {evaluation.get('reason')}")
+        attempts += 1
+
+    return {"message": "I must acknowledge that the data required to counter that specific point definitively is currently unavailable."}
